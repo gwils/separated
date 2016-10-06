@@ -1,29 +1,34 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Data.Separated.Separated(
   Separated
 , separated
 , Separated1
 , separated1
+-- * Viewing
 , separated1Head
 , separated1Tail
+-- Constructing
 , empty
 , (+-)
 , single
+-- * Appending
 , shift
-, separatedSwap
 , (.++.)
 , (++.)
 , (.++)
+-- * Alternating
 , separatedBy
 , separatedBy1
 ) where
 
 import Control.Applicative(Alternative(many))
-import Data.Bifoldable
-import Data.Bitraversable
+import Data.Bifoldable(Bifoldable(bifoldr))
+import Data.Bitraversable(Bitraversable(bitraverse))
 import Data.Functor.Apply as Apply((<.>))
 import Data.List(intercalate, zipWith, repeat)
 import Data.Monoid as Monoid(mappend)
@@ -45,6 +50,26 @@ import Papa hiding ((<.>))
 newtype Separated a b =
   Separated [(a, b)]
   deriving (Eq, Ord)
+
+makeWrapped ''Separated
+
+-- | The isomorphism that swaps elements with their separators.
+--
+-- >>> swapped # empty
+-- []
+--
+-- >>> swapped # ('x' +: 6 +: empty)
+-- [6,'x']
+--
+-- >>> empty ^. swapped
+-- []
+--
+-- >>> ('x' +: 6 +: empty) ^. swapped
+-- [6,'x']
+instance Swapped Separated where
+  swapped =
+    let swap = (\(Separated x) -> Separated (fmap (\(a, b) -> (b, a)) x))
+    in iso swap swap
 
 instance Bifunctor Separated where
   bimap f g (Separated x) =
@@ -159,7 +184,7 @@ instance (Semigroup b, Monoid b) => Applicative (Separated1 b) where
   (<*>) =
     separated1Ap (<>)
   pure =
-    Separated1 mempty . (separatedSwap #) . pure
+    Separated1 mempty . (swapped #) . pure
 
 instance SeparatedCons Separated Separated1 where
   type SeparatedConsF Separated1 = Separated
@@ -185,7 +210,7 @@ instance SeparatedCons Separated Separated1 where
 separated ::
   Iso [(a, b)] [(c, d)] (Separated a b) (Separated c d)
 separated =
-  iso Separated (\(Separated x) -> x)
+  from _Wrapped
 
 empty ::
   Separated s a
@@ -284,25 +309,6 @@ shift =
         let (w, z) = shiftL (Separated1 t' (Separated r))
         in ((s', a) : w, z)
   in iso shiftL shiftR
-
--- | The isomorphism that swaps elements with their separators.
---
--- >>> separatedSwap # empty
--- []
---
--- >>> separatedSwap # ('x' +: 6 +: empty)
--- [6,'x']
---
--- >>> empty ^. separatedSwap
--- []
---
--- >>> ('x' +: 6 +: empty) ^. separatedSwap
--- [6,'x']
-separatedSwap ::
-  Iso (Separated s a) (Separated t b) (Separated a s) (Separated b t)
-separatedSwap =
-  let swap (a, b) = (b, a)
-  in iso (\(Separated x) -> Separated (fmap swap x)) (\(Separated x) -> Separated (fmap swap x))
 
 -- | Append two lists of separated values to produce a list of pairs of separator and element values.
 --

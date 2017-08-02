@@ -31,7 +31,6 @@ library
                     , semigroups >= 0.9
                     , semigroupoids >= 4.0
                     , bifunctors >= 4.0
-                    , papa
                     
   ghc-options:
                     -Wall
@@ -44,8 +43,6 @@ library
 
   exposed-modules:
                     Data.Separated
-                    Data.Separated.Separated
-                    Data.Separated.SeparatedCons
 
 test-suite doctests
   type:

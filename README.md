@@ -1,4 +1,4 @@
 # Separated
 
-A data type with elements separated by values.
+ya gotta keep em separated
 

@@ -1,5 +1,5 @@
 name:               separated
-version:            0.2.0
+version:            0.2.1
 license:            BSD3
 license-File:       LICENCE
 author:             Tony Morris <ʇǝu˙sıɹɹoɯʇ@ןןǝʞsɐɥ>
@@ -8,7 +8,7 @@ copyright:          Copyright (c) 2016, Commonwealth Scientific and Industrial R
 synopsis:           A data type with elements separated by values
 category:           Data
 description:       
-  <<http://i.imgur.com/0h9dFhl.png>>
+  <<http://i.imgur.com/26ltTNG.png>>
   .
    A data type with elements separated by values
 homepage:           https://github.com/data61/separated

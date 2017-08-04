@@ -7,7 +7,10 @@ maintainer:         Tony Morris
 copyright:          Copyright (c) 2016, Commonwealth Scientific and Industrial Research Organisation (CSIRO) ABN 41 687 119 230.
 synopsis:           A data type with elements separated by values
 category:           Data
-description:        A data type with elements separated by values
+description:       
+  <<http://i.imgur.com/0h9dFhl.png>>
+  .
+   A data type with elements separated by values
 homepage:           https://github.com/data61/separated
 bug-reports:        https://github.com/data61/separated/issues
 cabal-version:      >= 1.10

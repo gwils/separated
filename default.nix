@@ -8,7 +8,7 @@ let
                        then pkgs.haskellPackages
                        else pkgs.haskell.packages.${compiler};
 
-  separated = pkgs.haskell.lib.dontCheck (haskellPackages.callPackage ./separated.nix {});
+  separated = haskellPackages.callPackage ./separated.nix {};
 
 in
 

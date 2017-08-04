@@ -1,6 +1,9 @@
 *~
 *#*
 
+# nix
+/result
+
 # CABAL
 /dist
 /.cabal-sandbox

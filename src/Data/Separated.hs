@@ -59,8 +59,10 @@ import Prelude(Show(show))
 -- >>> :set -XNoImplicitPrelude
 -- >>> :set -XFlexibleContexts
 -- >>> import Control.Lens(set)
+-- >>> import Control.Monad(return)
 -- >>> import Data.Char(toUpper)
 -- >>> import Data.Either(isLeft)
+-- >>> import Prelude hiding (id, (.))
 -- >>> import Text.Parsec(parse, char, digit)
 -- >>> import Test.QuickCheck(Arbitrary(..))
 -- >>> instance (Arbitrary s, Arbitrary a) => Arbitrary (Separated s a) where arbitrary = fmap (^. separated) arbitrary

@@ -1,3 +1,8 @@
+0.2.0
+
+* Refactoring with lots of changes to data types.
+* Introduce nix for building.
+
 0.1.2
 
 * Add instance of `Wrapped` and `Swapped`.

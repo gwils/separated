@@ -2,8 +2,8 @@ name:               separated
 version:            0.2.2
 license:            BSD3
 license-File:       LICENCE
-author:             Tony Morris <oᴉ˙ldɟb@llǝʞsɐɥ>
-maintainer:         Queensland Functional Programming Lab (QFPL)
+author:             Queensland Functional Programming Lab <oᴉ˙ldɟb@llǝʞsɐɥ>
+maintainer:         Queensland Functional Programming Lab <oᴉ˙ldɟb@llǝʞsɐɥ>
 copyright:          Copyright (c) 2017, Commonwealth Scientific and Industrial Research Organisation (CSIRO) ABN 41 687 119 230.
 synopsis:           A data type with elements separated by values
 category:           Data

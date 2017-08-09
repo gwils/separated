@@ -1,3 +1,7 @@
+0.2.3
+
+* Add `Foldable` and `Traversable` instances for `Separated`, `Separated1`, `Pesarated` and `Pesarated1`.
+
 0.2.0
 
 * Refactoring with lots of changes to data types.

@@ -43,7 +43,7 @@ import Data.Bifoldable(Bifoldable(bifoldr))
 import Data.Bifunctor(Bifunctor(bimap), first)
 import Data.Bitraversable(Bitraversable(bitraverse))
 import Data.Eq(Eq)
-import Data.Foldable(foldr)
+import Data.Foldable(Foldable, foldr)
 import Data.Functor(Functor(fmap), (<$>))
 import Data.Functor.Apply as Apply(Apply((<.>)))
 import Data.List(intercalate, zipWith, repeat)
@@ -51,9 +51,9 @@ import Data.Monoid(Monoid(mappend, mempty))
 import Data.Ord(Ord)
 import Data.Semigroup as Semigroup(Semigroup((<>)))
 import Data.String(String)
-import Data.Traversable(traverse)
-import Data.Tuple(uncurry)
-import Prelude(Show(show))
+import Data.Traversable(Traversable, traverse)
+import Data.Tuple(fst, snd, uncurry)
+import Prelude(Show(show), const, flip)
 
 -- $setup
 -- >>> :set -XNoImplicitPrelude
@@ -531,6 +531,14 @@ instance Functor (Separated a) where
   fmap =
     bimap id
 
+instance Foldable (Separated a) where
+  foldr f z (Separated xs) =
+    foldr f z (fmap snd xs)
+
+instance Traversable (Separated a) where
+  traverse f (Separated xs) =
+    Separated <$> traverse (traverse f) xs
+
 -- | Applies functions with element values, using a zipping operation, appending
 -- separators.
 --
@@ -613,6 +621,14 @@ instance Functor (Separated1 b) where
   fmap =
     bimap id
 
+instance Foldable (Separated1 b) where
+  foldr =
+    bifoldr (flip const)
+
+instance Traversable (Separated1 b) where
+  traverse =
+    bitraverse pure
+
 -- | Applies functions with separator values, using a zipping operation,
 -- appending elements.
 --
@@ -675,6 +691,15 @@ instance Bitraversable Pesarated where
 instance Functor (Pesarated a) where
   fmap f (Pesarated x) =
     Pesarated (first f x)
+
+instance Foldable (Pesarated b) where
+  foldr =
+    bifoldr (flip const)
+
+instance Traversable (Pesarated b) where
+  traverse =
+    bitraverse pure
+
 
 -- | Applies functions with element values, using a zipping operation, appending
 -- separators.
@@ -755,6 +780,14 @@ instance Bitraversable Pesarated1 where
 instance Functor (Pesarated1 a) where
   fmap f (Pesarated1 x) =
     Pesarated1 (first f x)
+
+instance Foldable (Pesarated1 a) where
+  foldr =
+    bifoldr (flip const)
+
+instance Traversable (Pesarated1 a) where
+  traverse =
+    bitraverse pure
 
 -- | Applies functions with separator values, using a zipping operation,
 -- appending elements.

@@ -25,6 +25,8 @@ module Data.Separated(
 , Separated1Single(..)
 , Pesarated1Single(..)
 , Construct(..)
+, Sprinkle(..)
+, skrinple
 , SeparatedCons(..)
 , PesaratedCons(..)
 -- * Appending
@@ -47,6 +49,7 @@ import Data.Foldable(Foldable, foldr)
 import Data.Functor(Functor(fmap), (<$>))
 import Data.Functor.Apply as Apply(Apply((<.>)))
 import Data.List(intercalate, zipWith, repeat)
+import Data.List.NonEmpty (NonEmpty ((:|)))
 import Data.Monoid(Monoid(mappend, mempty))
 import Data.Ord(Ord)
 import Data.Semigroup as Semigroup(Semigroup((<>)))
@@ -252,10 +255,6 @@ class Construct f where
     -> f a s
   empty ::
     f s a
-  sprinkle ::
-    s
-    -> [a]
-    -> f s a
 
 infixl 9 +-
 
@@ -273,9 +272,6 @@ instance Construct Separated where
     swapped # (s +- a)
   empty =
     Separated mempty
-  sprinkle s as =
-    Separated
-      ((,) s <$> as)
 
 -- | One element and one separator.
 --
@@ -291,9 +287,31 @@ instance Construct Pesarated where
     _Wrapped # (s +- a)
   empty =
     Pesarated empty
+
+-- | Generalised interspersion
+class Sprinkle f where
+  sprinkle ::
+    s
+    -> [a]
+    -> f s a
+
+instance Sprinkle Separated where
+  sprinkle s as =
+    Separated
+      ((,) s <$> as)
+
+instance Sprinkle Pesarated where
   sprinkle s as =
     Pesarated
       (swapped # sprinkle s as)
+
+instance Sprinkle Separated1 where
+  sprinkle s as =
+    Separated1 s (swapped # sprinkle s as)
+
+skrinple :: s -> NonEmpty a -> Pesarated1 s a
+skrinple s (a:|as) =
+  Pesarated1 (Separated1 a (sprinkle s as))
 
 -- | Prepend a value to a separated-like structure.
 class (f ~ SeparatedConsF g, g ~ SeparatedConsG f) => SeparatedCons f g where

@@ -27,9 +27,11 @@ deriveShow1 ''Before
 instance Bifunctor Before where
   bimap f g (Before s a) = Before (f s) (g a)
 
+-- | @'bifoldMap' f g ('Before' s a) = f s '<>' g a@
 instance Bifoldable Before where
   bifoldMap f g (Before s a) = f s <> g a
 
+-- | @'bitraverse' f g ('Before' s a) = 'Before' '<$>' f s '<*>' g a@
 instance Bitraversable Before where
   bitraverse f g (Before s a) = Before <$> f s <*> g a
 
@@ -62,9 +64,11 @@ deriveShow1 ''After
 instance Bifunctor After where
   bimap f g (After a s) = After (g a) (f s)
 
+-- | @'bifoldMap' f g ('After' a s) = g a '<>' f s@
 instance Bifoldable After where
   bifoldMap f g (After a s) = g a <> f s
 
+-- | @'bitraverse' f g ('After' a s) = 'After' '<$>' g a '<*>' f s@
 instance Bitraversable After where
   bitraverse f g (After a s) = After <$> g a <*> f s
   

@@ -49,9 +49,11 @@ deriveShow1 ''Between'
 instance Bifunctor Between' where
   bimap f g (Between' s a s') = Between' (f s) (g a) (f s')
 
+-- | @'bifoldMap' f g ('Between'' s a s') = f s '<>' g a '<>' f s'@
 instance Bifoldable Between' where
   bifoldMap f g (Between' s a s') = f s <> g a <> f s'
     
+-- | @'bitraverse' f g ('Between'' s a s') = 'Between'' '<$>' f s '<*>' g a '<*>' f s'@
 instance Bitraversable Between' where
   bitraverse f g (Between' s a s') = Between' <$> f s <*> g a <*> f s'
 

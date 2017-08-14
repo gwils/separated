@@ -3,7 +3,7 @@
 {-# language DeriveTraversable #-}
 {-# language TemplateHaskell #-}
 module Data.Separated.Between
-  ( -- * Data types
+  ( -- * Datatypes
     Between(..)
   , Between'(..)
     -- * Isos
@@ -25,21 +25,21 @@ import Data.Foldable
 import Data.Monoid
 import Data.Ord
 
--- | An 'a' with an 's' on the left and a 't' on the right
+-- | An @a@ with an @s@ on the left and a @t@ on the right
 data Between s t a = Between s a t
   deriving (Eq, Foldable, Functor, Ord, Traversable, Show)
 
 deriveEq1 ''Between
 deriveShow1 ''Between
 
--- | 'Between s t a' is isomorphic to '(s, a, t)'
+-- | @'Between' s t a@ is isomorphic to @(s, a, t)@
 between :: Iso (s, a, s') (t, b, t') (Between s s' a) (Between t t' b) 
 between =
   iso
   (\(t, b, t') -> Between t b t')
   (\(Between s a s') -> (s, a, s'))
 
--- | An 'a' with an 's' on each side
+-- | An @a@ with an @s@ on each side
 data Between' s a = Between' s a s
   deriving (Eq, Foldable, Functor, Traversable, Show)
 
@@ -55,14 +55,14 @@ instance Bifoldable Between' where
 instance Bitraversable Between' where
   bitraverse f g (Between' s a s') = Between' <$> f s <*> g a <*> f s'
 
--- | 'Between' s a' is isomorphic to '(s, a, s)'
+-- | @'Between'' s a@ is isomorphic to @(s, a, s)@
 between' :: Iso (s, a, s) (t, b, t) (Between' s a) (Between' t b) 
 between' =
   iso
   (\(t, b, t') -> Between' t b t')
   (\(Between' s a s') -> (s, a, s'))
 
--- | 'Between' s a' is isomorphic to 'Between s s a'
+-- | @'Between'' s a@ is isomorphic to @'Between' s s a@
 betweens :: Iso (Between s s a) (Between t t b) (Between' s a) (Between' t b)
 betweens =
   iso

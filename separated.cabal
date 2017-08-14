@@ -46,6 +46,8 @@ library
   hs-source-dirs:
                     src
 
+  other-modules:
+                    Data.Separated.Internal
   exposed-modules:
                     Data.Separated.After
                     Data.Separated.Between

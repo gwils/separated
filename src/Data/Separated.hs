@@ -27,6 +27,7 @@ module Data.Separated(
 , Construct(..)
 , Sprinkle(..)
 , skrinple
+, skrinpleMay
 , SeparatedCons(..)
 , PesaratedCons(..)
 -- * Appending
@@ -49,7 +50,8 @@ import Data.Foldable(Foldable, foldr)
 import Data.Functor(Functor(fmap), (<$>))
 import Data.Functor.Apply as Apply(Apply((<.>)))
 import Data.List(intercalate, zipWith, repeat)
-import Data.List.NonEmpty (NonEmpty ((:|)))
+import Data.List.NonEmpty (NonEmpty ((:|)), nonEmpty)
+import Data.Maybe (Maybe)
 import Data.Monoid(Monoid(mappend, mempty))
 import Data.Ord(Ord)
 import Data.Semigroup as Semigroup(Semigroup((<>)))
@@ -312,6 +314,10 @@ instance Sprinkle Separated1 where
 skrinple :: s -> NonEmpty a -> Pesarated1 s a
 skrinple s (a:|as) =
   Pesarated1 (Separated1 a (sprinkle s as))
+
+skrinpleMay :: s -> [a] -> Maybe (Pesarated1 s a)
+skrinpleMay s as =
+  skrinple s <$> nonEmpty as
 
 -- | Prepend a value to a separated-like structure.
 class (f ~ SeparatedConsF g, g ~ SeparatedConsG f) => SeparatedCons f g where

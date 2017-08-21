@@ -1,5 +1,5 @@
 name:               separated
-version:            0.2.3
+version:            0.3
 license:            BSD3
 license-file:       LICENCE
 author:             Queensland Functional Programming Lab <oᴉ˙ldɟb@llǝʞsɐɥ>
@@ -35,6 +35,7 @@ library
                     , semigroups    >= 0.9 && < 1
                     , semigroupoids >= 4.0 && < 6
                     , bifunctors    >= 4.0 && < 6
+                    , deriving-compat >= 0.3 && < 0.4
                     
   ghc-options:
                     -Wall
@@ -45,7 +46,12 @@ library
   hs-source-dirs:
                     src
 
+  other-modules:
+                    Data.Separated.Internal
   exposed-modules:
+                    Data.Separated.After
+                    Data.Separated.Between
+                    Data.Separated.Before
                     Data.Separated
 
 test-suite doctests

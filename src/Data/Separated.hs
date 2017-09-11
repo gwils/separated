@@ -825,7 +825,7 @@ instance Traversable1 (Pesarated1 a) where
     let consPair (y,x) s = y -: x -: s
     in case abs of
       [] -> singlePesarated <$> f b
-      ((a,b'):xs) -> consPair <$> (fmap (,a) (f b)) <.> traverse1 f (b' -: xs ^. pesarated)
+      ((a,b'):xs) -> consPair <$> fmap (,a) (f b) <.> traverse1 f (b' -: xs ^. pesarated)
 
 -- | Applies functions with separator values, using a zipping operation,
 -- appending elements.

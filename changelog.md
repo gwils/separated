@@ -1,3 +1,7 @@
+0.3
+
+* Add `Foldable1` and `Traversable1` instances for `Pesarated1`.
+
 0.2.3
 
 * Add `Foldable` and `Traversable` instances for `Separated`, `Separated1`, `Pesarated` and `Pesarated1`.

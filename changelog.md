@@ -1,4 +1,4 @@
-0.3
+0.3.0
 
 * Add `Foldable1` and `Traversable1` instances for `Pesarated1`.
 

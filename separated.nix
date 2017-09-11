@@ -4,7 +4,7 @@
 }:
 mkDerivation {
   pname = "separated";
-  version = "0.3";
+  version = "0.3.0";
   src = ./.;
   libraryHaskellDepends = [
     base bifunctors deriving-compat lens semigroupoids semigroups

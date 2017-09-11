@@ -6,6 +6,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FunctionalDependencies #-}
 {-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE TupleSections #-}
 
 module Data.Separated(
 -- * Data types
@@ -55,6 +56,8 @@ import Data.Maybe (Maybe)
 import Data.Monoid(Monoid(mappend, mempty))
 import Data.Ord(Ord)
 import Data.Semigroup as Semigroup(Semigroup((<>)))
+import Data.Semigroup.Foldable (Foldable1, foldMap1)
+import Data.Semigroup.Traversable (Traversable1, traverse1)
 import Data.String(String)
 import Data.Traversable(Traversable, traverse)
 import Data.Tuple(fst, snd, uncurry)
@@ -809,9 +812,20 @@ instance Foldable (Pesarated1 a) where
   foldr =
     bifoldr (flip const)
 
+instance Foldable1 (Pesarated1 a) where
+  foldMap1 f (Pesarated1 (Separated1 b (Separated abs))) =
+    foldMap1 f (b :| fmap snd abs)
+
 instance Traversable (Pesarated1 a) where
   traverse =
     bitraverse pure
+
+instance Traversable1 (Pesarated1 a) where
+  traverse1 f (Pesarated1 (Separated1 b (Separated abs))) =
+    let consPair (y,x) s = y -: x -: s
+    in case abs of
+      [] -> singlePesarated <$> f b
+      ((a,b'):xs) -> consPair <$> fmap (,a) (f b) <.> traverse1 f (b' -: xs ^. pesarated)
 
 -- | Applies functions with separator values, using a zipping operation,
 -- appending elements.

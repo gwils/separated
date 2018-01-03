@@ -1,13 +1,13 @@
 *~
 *#*
 
-# nix
-/result
-
 # CABAL
 /dist
 /.cabal-sandbox
 /cabal.sandbox.config
+
+# nix
+/result
 
 # Haskell Program Coverage
 /.hpc
@@ -23,3 +23,4 @@
 # ctags
 TAGS
 
+.stack-work

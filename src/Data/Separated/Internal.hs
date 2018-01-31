@@ -1,5 +1,6 @@
 {-# language DeriveFunctor #-}
 {-# language DeriveFoldable #-}
+{-# language DeriveGeneric #-}
 {-# language DeriveTraversable #-}
 {-# language TemplateHaskell #-}
 
@@ -16,10 +17,11 @@ import Data.Foldable
 import Data.Functor
 import Data.Monoid
 import Data.Ord
+import GHC.Generics (Generic, Generic1)
 
 -- | An @s@ that comes before an @a@
 data Before s a = Before s a
-  deriving (Eq, Foldable, Functor, Ord, Traversable, Show)
+  deriving (Eq, Foldable, Functor, Ord, Traversable, Show, Generic, Generic1)
 
 deriveEq1 ''Before
 deriveShow1 ''Before
@@ -57,7 +59,7 @@ beforeAfter =
 
 -- | An @s@ that comes after an @a@
 data After s a = After a s
-  deriving (Eq, Foldable, Functor, Ord, Traversable, Show)
+  deriving (Eq, Foldable, Functor, Ord, Traversable, Show, Generic, Generic1)
 
 deriveEq1 ''After
 deriveShow1 ''After

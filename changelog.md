@@ -1,3 +1,7 @@
+0.3.2
+
+* Added `Generic` and `Generic1` instances for `Before`, `After`, `Between`, and `Between'`
+
 0.3.1
 
 * Added `Ord1` instances for `Before`, `After`, `Between`, and `Between'`

@@ -1,5 +1,6 @@
 {-# language DeriveFunctor #-}
 {-# language DeriveFoldable #-}
+{-# language DeriveGeneric #-}
 {-# language DeriveTraversable #-}
 {-# language TemplateHaskell #-}
 module Data.Separated.Between
@@ -24,10 +25,11 @@ import Data.Functor
 import Data.Foldable
 import Data.Monoid
 import Data.Ord
+import GHC.Generics
 
 -- | An @a@ with an @s@ on the left and a @t@ on the right
 data Between s t a = Between s a t
-  deriving (Eq, Foldable, Functor, Ord, Traversable, Show)
+  deriving (Eq, Foldable, Functor, Ord, Traversable, Show, Generic, Generic1)
 
 deriveEq1 ''Between
 deriveShow1 ''Between
@@ -42,7 +44,7 @@ between =
 
 -- | An @a@ with an @s@ on each side
 data Between' s a = Between' s a s
-  deriving (Eq, Foldable, Functor, Ord, Traversable, Show)
+  deriving (Eq, Foldable, Functor, Ord, Traversable, Show, Generic, Generic1)
 
 deriveEq1 ''Between'
 deriveShow1 ''Between'

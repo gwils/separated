@@ -1,3 +1,7 @@
+0.3.2.1
+
+* Fixed Setup.hs to work with Cabal2
+
 0.3.2
 
 * Added `Generic` and `Generic1` instances for `Before`, `After`, `Between`, and `Between'`

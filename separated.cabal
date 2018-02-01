@@ -16,14 +16,17 @@ bug-reports:        https://github.com/qfpl/separated/issues
 cabal-version:      >= 1.10
 build-type:         Custom
 EXtra-source-files: changelog.md
-tested-with:        GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.1
+tested-with:        GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.1
 
 source-repository   head
   type:             git
   location:         git@github.com:qfpl/separated.git
 
-flag                small_base
-  description:      Choose the new, split-up base package.
+custom-setup
+  setup-depends:
+    base          >= 4 && < 5,
+    Cabal,
+    cabal-doctest >= 1 && < 1.1
 
 library
   default-language:
@@ -66,7 +69,7 @@ test-suite doctests
 
   build-depends:
                     base               >= 4.7   && < 5
-                    , doctest          >= 0.9.7
+                    , doctest          >= 0.11 && < 0.14
                     , filepath         >= 1.3
                     , directory        >= 1.1
                     , QuickCheck       >= 2.0

@@ -60,7 +60,7 @@ import Data.Semigroup.Foldable (Foldable1, foldMap1)
 import Data.Semigroup.Traversable (Traversable1, traverse1)
 import Data.String(String)
 import Data.Traversable(Traversable, traverse)
-import Data.Tuple(fst, snd, uncurry)
+import Data.Tuple(snd, uncurry)
 import Prelude(Show(show), const, flip)
 
 -- $setup
